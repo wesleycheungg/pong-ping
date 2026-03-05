@@ -1,16 +1,144 @@
-# React + Vite
+# 🏓 Ping Pong Leaderboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A real-time Elo-based ping pong leaderboard for you and your friends. Log matches, track rankings, view player profiles, and see who's on a hot streak.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Elo rating system** — beating a higher-ranked player earns more points than beating a lower-ranked one
+- **Real-time updates** — data syncs instantly across all devices via Firebase
+- **Player profiles** — click any player to see their Elo history chart, win streak, and best win
+- **Streak indicators** — 🔥 for win streaks, 🥶 for loss streaks on the leaderboard
+- **Match history** — last 50 matches logged with Elo changes
+- **Rank tiers** — Rookie → Player → Expert → Master → Grand Master
+- **Responsive** — works on desktop, tablet, and mobile
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** — UI
+- **Vite** — build tool and dev server
+- **Firebase Firestore** — real-time cloud database
+- **Recharts** — Elo history line chart
+- **Vitest** — unit tests
+- **Playwright** — end-to-end tests
+
+---
+
+## Project Structure
+
+```
+src/
+├── App.jsx                  # Root component — state & Firebase logic
+├── firebase.js              # Firebase config and db export
+├── utils/
+│   ├── elo.js               # calcElo, getRank, DEFAULT_ELO
+│   └── stats.js             # getStreak, getBestWin, getEloHistory
+├── styles/
+│   └── global.js            # All CSS
+└── components/
+    ├── Header.jsx
+    ├── Tabs.jsx
+    ├── Rankings.jsx          # Leaderboard with streak badges
+    ├── LogMatch.jsx          # Match submission form
+    ├── History.jsx           # Match history list
+    ├── AddPlayers.jsx        # Add/remove players
+    └── PlayerProfile.jsx     # Profile modal with chart and stats
+e2e/
+└── leaderboard.spec.js      # Playwright E2E tests
+src/tests/
+├── setup.js
+├── elo.test.js
+├── firebase.test.js
+└── components/
+    ├── Rankings.test.jsx
+    ├── LogMatch.test.jsx
+    └── AddPlayers.test.jsx
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A Firebase project with Firestore enabled
+
+### Installation
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ping-pong.git
+cd ping-pong
+npm install
+```
+
+### Firebase Setup
+
+1. Create a project at [firebase.google.com](https://firebase.google.com)
+2. Enable Firestore in test mode
+3. Replace the config in `src/firebase.js` with your own project credentials
+
+### Run locally
+
+```bash
+npm run dev
+```
+
+App will be running at `http://localhost:5173`
+
+---
+
+## Running Tests
+
+**Unit tests:**
+```bash
+npm test
+```
+
+**End-to-end tests** (requires dev server running):
+```bash
+npx playwright test
+
+# Run with browser visible
+npx playwright test --headed
+```
+
+---
+
+## Deployment
+
+This project is deployed on Vercel. Every push to `main` triggers an automatic redeploy.
+
+To deploy your own instance:
+1. Push the repo to GitHub
+2. Import it at [vercel.com](https://vercel.com)
+3. Vercel auto-detects Vite — just hit Deploy
+
+---
+
+## How Elo Works
+
+Each player starts at **1000 Elo**. After every match:
+
+- The winner gains points, the loser loses the same amount
+- Beating a higher-rated player = bigger gain
+- Beating a lower-rated player = smaller gain
+- K-factor is set to **32** — meaning the maximum swing per match is 32 points
+
+**Rank thresholds:**
+
+| Rank | Elo |
+|------|-----|
+| 🥉 Rookie | < 950 |
+| 🎯 Player | 950 – 1099 |
+| ⚡ Expert | 1100 – 1249 |
+| 💎 Master | 1250 – 1399 |
+| 👑 Grand Master | 1400+ |
+
+---
+
+## Contributing
+
+This is a private friends leaderboard — no auth required. Anyone with the URL can add players and log matches. Keep it honest! 🏓
