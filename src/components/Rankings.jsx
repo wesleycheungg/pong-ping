@@ -53,10 +53,26 @@ export default function Rankings({ players, matches, onSelectPlayer }) {
               </div>
               <div className="player-rank" style={{ color: rank.color }}>{rank.label}</div>
             </div>
-            <div className="player-stats">
-              <div className="elo-num">{p.elo}</div>
-              <div className="wl">{p.wins}W {p.losses}L · {winRate}%</div>
-            </div>
+<div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+  <div className="player-stats">
+    <div className="elo-num">{p.elo}</div>
+    <div className="wl">{p.wins}W {p.losses}L · {winRate}%</div>
+    </div>
+        <button
+          onClick={e => { e.stopPropagation(); onSelectPlayer(p); }}
+          style={{
+            background: 'rgba(255,255,255,0.07)',
+            border: '1px solid rgba(255,255,255,0.12)',
+            color: 'rgba(255,255,255,0.5)',
+            borderRadius: 8, width: 36, height: 36,
+            fontSize: 16, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
+        👤
+      </button>
+  </div>
           </div>
         );
       })}

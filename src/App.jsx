@@ -51,20 +51,21 @@ export default function App() {
     flash(`${name} added!`);
   }
 
-  async function handleLogMatch(winnerName, loserName) {
-    const w = players.find(p => p.name === winnerName);
-    const l = players.find(p => p.name === loserName);
-    if (!w || !l) return;
-    const { newWinner, newLoser, winnerGain } = calcElo(w.elo, l.elo);
-    await setDoc(doc(db, "players", w.id), { ...w, elo: newWinner, wins: w.wins + 1 });
-    await setDoc(doc(db, "players", l.id), { ...l, elo: newLoser, losses: l.losses + 1 });
-    await addDoc(collection(db, "matches"), {
-      winner: winnerName, loser: loserName,
-      winnerElo: newWinner, loserElo: newLoser,
-      gain: winnerGain, date: Date.now(),
-    });
-    flash(`${winnerName} +${winnerGain} ELO 🏆`);
-  }
+async function handleLogMatch(winnerName, loserName, loserScore) {
+  const w = players.find(p => p.name === winnerName);
+  const l = players.find(p => p.name === loserName);
+  if (!w || !l) return;
+  const { newWinner, newLoser, winnerGain } = calcElo(w.elo, l.elo);
+  await setDoc(doc(db, "players", w.id), { ...w, elo: newWinner, wins: w.wins + 1 });
+  await setDoc(doc(db, "players", l.id), { ...l, elo: newLoser, losses: l.losses + 1 });
+  await addDoc(collection(db, "matches"), {
+    winner: winnerName, loser: loserName,
+    winnerElo: newWinner, loserElo: newLoser,
+    gain: winnerGain, date: Date.now(),
+    ...(loserScore != null && { winnerScore: 11, loserScore }),
+  });
+  flash(`${winnerName} +${winnerGain} ELO 🏆`);
+}
 
   async function handleDeletePlayer(player) {
     if (!window.confirm(`Remove ${player.name}?`)) return;
