@@ -91,40 +91,48 @@ const globalStyles = `
     border-bottom: 2px solid #FFD700 !important;
   }
 
-  /* Rankings */
-  .rankings-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .empty-state {
-    text-align: center; color: rgba(255,255,255,0.2);
-    padding: 60px 0; font-size: 15px; grid-column: 1/-1;
-  }
-  .player-card {
-    display: flex; align-items: center; gap: 16px;
-    padding: 18px 20px; border-radius: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: transform 0.15s;
-  }
-  .player-card:hover { transform: translateY(-1px); }
-  .player-card-top {
-    background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,140,0,0.06)) !important;
-    border: 1px solid rgba(255,215,0,0.25) !important;
-  }
-  .rank-num { width: 36px; text-align: center; font-family: 'Bebas Neue', cursive; flex-shrink: 0; }
-  .avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 700; flex-shrink: 0;
-  }
-  .player-info { flex: 1; min-width: 0; }
-  .player-name { font-weight: 700; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .player-rank { font-size: 10px; letter-spacing: 2px; margin-top: 2px; font-weight: 600; }
-  .player-stats { text-align: right; flex-shrink: 0; }
-  .elo-num { font-family: 'Bebas Neue', cursive; font-size: 26px; color: #FFD700; line-height: 1; }
-  .wl { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+/* Rankings table */
+.empty-state {
+  text-align: center; color: rgba(255,255,255,0.2);
+  padding: 60px 0; font-size: 15px;
+}
+.table-wrapper {
+  width: 100%; overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.rankings-table {
+  width: 100%; border-collapse: collapse; font-size: 14px;
+}
+.rankings-table thead tr {
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.rankings-table th {
+  padding: 12px 16px; font-size: 10px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.3); font-weight: 600;
+  text-align: center; white-space: nowrap;
+}
+.rankings-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+}
+.rankings-table tbody tr:last-child { border-bottom: none; }
+.rankings-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.rankings-table td { padding: 14px 16px; text-align: center; white-space: nowrap; }
+.row-top { background: rgba(255,215,0,0.05); }
+.row-top:hover { background: rgba(255,215,0,0.08) !important; }
+.td-rank { font-family: 'Bebas Neue', cursive; font-size: 18px; color: rgba(255,255,255,0.2); }
+.td-elo { font-family: 'Bebas Neue', cursive; font-size: 22px; color: #FFD700; }
+.name-btn {
+  background: none; border: none; cursor: pointer;
+  color: #f0f0f0; font-weight: 700; font-size: 15px;
+  padding: 0; text-align: left;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.15);
+  text-underline-offset: 3px; transition: color 0.15s;
+}
+.name-btn:hover { color: #FFD700; text-decoration-color: #FFD700; }
 
   /* Panel */
   .panel {
