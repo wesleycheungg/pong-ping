@@ -180,7 +180,7 @@ const globalStyles = `
   .section-title { font-family: 'Bebas Neue', cursive; font-size: 22px; letter-spacing: 4px; margin-bottom: 20px; color: #FFD700; }
   .history-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    grid-template-columns: 1fr;
     gap: 8px;
   }
   .history-card {
