@@ -134,6 +134,15 @@ const globalStyles = `
 }
 .name-btn:hover { color: #FFD700; text-decoration-color: #FFD700; }
 
+.log-match-btn {
+  padding: 10px 20px; border-radius: 10px; border: none;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #0a0a0f; font-weight: 800; font-size: 13px;
+  letter-spacing: 0.5px; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.log-match-btn:hover { opacity: 0.85; }
+
   /* Panel */
   .panel {
     background: rgba(255,255,255,0.04); border-radius: 16px; padding: 40px;

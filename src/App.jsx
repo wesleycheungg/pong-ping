@@ -24,6 +24,7 @@ export default function App() {
   const [flashMsg, setFlashMsg]           = useState(null);
   const [loading, setLoading]             = useState(true);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [showLogMatch, setShowLogMatch] = useState(false);
 
   useEffect(() => {
     const unsubPlayers = onSnapshot(collection(db, "players"), snap => {
@@ -97,14 +98,14 @@ async function handleLogMatch(winnerName, loserName, loserScore) {
           {flashMsg && <div className="flash">{flashMsg}</div>}
           <Tabs active={tab} onChange={setTab} />
 
-          {tab === "board"   && (
+          {tab === "board" && (
             <Rankings
               players={players}
               matches={matches}
               onSelectPlayer={setSelectedPlayer}
+              onLogMatch={() => setShowLogMatch(true)}
             />
           )}
-          {tab === "match"   && <LogMatch   players={players} onSubmit={handleLogMatch} />}
           {tab === "history" && <History    matches={matches} />}
           {tab === "add"     && (
             <AddPlayers
@@ -115,7 +116,13 @@ async function handleLogMatch(winnerName, loserName, loserScore) {
           )}
         </div>
 
-        {/* Player profile modal */}
+        {showLogMatch && (
+          <LogMatch
+            players={players}
+            onSubmit={handleLogMatch}
+            onClose={() => setShowLogMatch(false)}
+          />
+        )}
         {liveSelectedPlayer && (
           <PlayerProfile
             player={liveSelectedPlayer}

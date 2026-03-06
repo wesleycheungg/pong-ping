@@ -1,6 +1,5 @@
 const TABS = [
   ["board",   "🏆 Rankings"],
-  ["match",   "⚔️ Log Match"],
   ["history", "📜 History"],
   ["add",     "➕ Players"],
 ];
